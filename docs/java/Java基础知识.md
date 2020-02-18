@@ -139,7 +139,7 @@ JRE 是 Java运行时环境。它是运行已编译 Java 程序所需的所有�
 - Java 不提供指针来直接访问内存，程序内存更加安全
 - Java 的类是单继承的，C++ 支持多重继承；虽然 Java 的类不可以多继承，但是接口可以多继承。
 - Java 有自动内存管理机制，不需要程序员手动释放无用内存
-- **在 C 语言中，字符串或字符数组最后都会有一个额外的字符‘\0’来表示结束。但是，Java 语言中没有结束符这一概念。** 这是一个值得深度思考的问题，具体原因推荐看这篇文章： https://blog.csdn.net/sszgg2006/article/details/49148189。
+- **在 C 语言中，字符串或字符数组最后都会有一个额外的字符‘\0’来表示结束。但是，Java 语言中没有结束符这一概念。** 这是一个值得深度思考的问题，具体原因推荐看这篇文章： [https://blog.csdn.net/sszgg2006/article/details/49148189]( https://blog.csdn.net/sszgg2006/article/details/49148189)
 
 
 ## 6. 什么是 Java 程序的主类 应用程序和小程序的主类有何不同?
@@ -161,7 +161,7 @@ JRE 是 Java运行时环境。它是运行已编译 Java 程序所需的所有�
 
 ## 9. 构造器 Constructor 是否可被 override?
 
-在讲继承的时候我们就知道父类的私有属性和构造方法并不能被继承，所以 Constructor 也就不能被 override（重写）,但是可以 overload（重载）,所以你可以看到一个类中有多个构造函数的情况。
+Constructor 不能被 override（重写）,但是可以 overload（重载）,所以你可以看到一个类中有多个构造函数的情况。
 
 ## 10. 重载和重写的区别
 
@@ -367,7 +367,7 @@ hashCode() 的作用是获取哈希码，也称为散列码；它实际上是返
 
 ## 28. 为什么Java中只有值传递？
 
- [为什么Java中只有值传递？](https://github.com/Snailclimb/JavaGuide/blob/master/docs/essential-content-for-interview/MostCommonJavaInterviewQuestions/%E7%AC%AC%E4%B8%80%E5%91%A8%EF%BC%882018-8-7%EF%BC%89.md)
+[为什么Java中只有值传递？](https://juejin.im/post/5e18879e6fb9a02fc63602e2)
 
 
 ## 29. 简述线程、程序、进程的基本概念。以及他们之间关系是什么?

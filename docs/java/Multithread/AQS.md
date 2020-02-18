@@ -12,7 +12,7 @@
     - [4.1 CountDownLatch 的三种典型用法](#41-countdownlatch-的三种典型用法)
     - [4.2 CountDownLatch 的使用示例](#42-countdownlatch-的使用示例)
     - [4.3 CountDownLatch 的不足](#43-countdownlatch-的不足)
-    - [4.4 CountDownLatch 相常见面试题：](#44-countdownlatch-相常见面试题)
+    - [4.4 CountDownLatch 常见面试题](#44-countdownlatch-相常见面试题)
 - [5 CyclicBarrier(循环栅栏)](#5-cyclicbarrier循环栅栏)
     - [5.1 CyclicBarrier 的应用场景](#51-cyclicbarrier-的应用场景)
     - [5.2 CyclicBarrier 的使用示例](#52-cyclicbarrier-的使用示例)
@@ -32,7 +32,7 @@ AQS 的全称为（AbstractQueuedSynchronizer），这个类在 java.util.concur
 
 ![enter image description here](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/Java%20%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/AQS.png)
 
-AQS 是一个用来构建锁和同步器的框架，使用 AQS 能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的 ReentrantLock，Semaphore，其他的诸如 ReentrantReadWriteLock，SynchronousQueue，FutureTask 等等皆是基于 AQS 的。当然，我们自己也能利用 AQS 非常轻松容易地构造出符合我们自己需求的同步器。
+AQS 是一个用来构建锁和同步器的框架，使用 AQS 能简单且高效地构造出应用广泛的大量的同步器，比如我们提到的 ReentrantLock，Semaphore，其他的诸如 ReentrantReadWriteLock，SynchronousQueue，FutureTask(jdk1.7) 等等皆是基于 AQS 的。当然，我们自己也能利用 AQS 非常轻松容易地构造出符合我们自己需求的同步器。
 
 ### 2 AQS 原理
 

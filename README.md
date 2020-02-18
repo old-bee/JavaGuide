@@ -1,6 +1,8 @@
 点击关注[公众号](#公众号)及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。
 
-**[安利一下阿里云双 12 的活动，1 核 2g 只要 89 一年，薅波羊毛，感觉甚爽，不过最低的优惠都是新人才能享有的，我是用我女朋友的账号买的，没有女朋友的，emm.....，可以考虑一下亲人的。](https://www.aliyun.com/minisite/goods?userCode=hf47liqn&share_source=copy_link)**
+[推荐一下：阿里云高性能服务器，1核1g最低89，不限性能。](https://www.aliyun.com/minisite/goods?userCode=hf47liqn)
+
+少部分原创文章更新在了知识星球，关于我为什么要弄知识星球，请看这里：**[犹豫了很久，还是做了一个很久没敢做的事情](https://javaguide.cn/2019/01/02/chat/%E5%81%9A%E4%BA%86%E4%B8%80%E4%B8%AA%E5%BE%88%E4%B9%85%E6%B2%A1%E6%95%A2%E5%81%9A%E7%9A%84%E4%BA%8B%E6%83%85/)** ，优惠卷地址：[https://t.zsxq.com/iIqZBUR](https://t.zsxq.com/iIqZBUR) 。
 
 <p align="center">
 <a href="https://github.com/Snailclimb/JavaGuide" target="_blank">
@@ -19,12 +21,9 @@
 
 <h3 align="center">Sponsor</h3>
 <p align="center">
-<a  href="https://url.163.com/hXm">
-<img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/WechatIMG1.png"width="" style="margin: 0 auto;"/>
-</a>
-<a  href="http://mp.weixin.qq.com/s?__biz=MjM5MTE1NTQ4Mg==&mid=502249586&idx=1&sn=6384cb5b150b8e2a1c71715d6e4ea777&chksm=3ea2cc0709d54511aaa36b6f6d626219ece05295f80fad2c8e5df877345698b7eb92e1f454b3#rd">
-<img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-11/WechatIMG1523123.jpeg"  style=" margin: 0 auto;"/>
-</a>
+<a  href="https://mp.weixin.qq.com/s/li9_YXNVxan6Qgt3Q9FYqA">
+<img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/WechatIMG1.png" style="margin: 0 auto;width:400px"/>
+</a >
 </p>
 
 推荐使用  https://snailclimb.gitee.io/javaguide 在线阅读，在线阅读内容本仓库同步一致。这种方式阅读的优势在于：阅读体验会更好。
@@ -50,7 +49,7 @@
     - [Redis](#redis)
     - [数据库扩展](#数据库扩展)
 - [系统设计](#系统设计)
-    - [常用框架(Spring/SpringBoot、Zookeeper ... )](#常用框架)
+    - [常用框架(Spring,SpringBoot,MyBatis)](#常用框架)
     - [数据通信/中间件(消息队列、RPC ... )](#数据通信中间件)
     - [权限认证](#权限认证)
     - [分布式 & 微服务](#分布式--微服务)
@@ -58,7 +57,10 @@
       - [配置中心](#配置中心)
       - [唯一 id 生成](#唯一-id-生成)
       - [服务治理：服务注册与发现、服务路由控制](#服务治理服务注册与发现服务路由控制)
-    - [架构](#架构)
+    - [大型网站架构](#大型网站架构)
+      - [性能测试](#性能测试)
+      - [高并发](#高并发)
+      - [高可用](#高可用)
     - [设计模式(工厂模式、单例模式 ... )](#设计模式)
 - [面试指南](#面试指南)
     - [备战面试](#备战面试)
@@ -77,22 +79,39 @@
 
 ### 基础
 
+**基础知识系统总结：**
+
 * **[Java 基础知识回顾](docs/java/Java基础知识.md)**
 * **[Java 基础知识疑难点/易错点](docs/java/Java疑难点.md)**
 * **[一些重要的Java程序设计题](docs/java/Java程序设计题.md)**
 * [J2EE 基础知识回顾](docs/java/J2EE基础知识.md)
 
+**重要知识点详解：**
+
+- [用好Java中的枚举,真的没有那么简单!](docs/java/basis/用好Java中的枚举,真的没有那么简单!)
+- [Java 常见关键字总结：final、static、this、super!](docs/java/basis/final、static、this、super.md)
+
 ### 容器
 
+**总结：**
+
 * **[Java容器常见面试题/知识点总结](docs/java/collection/Java集合框架常见面试题.md)**
+
+**源码学习：**
+
 * [ArrayList 源码学习](docs/java/collection/ArrayList.md)  
 * [LinkedList 源码学习](docs/java/collection/LinkedList.md)   
 * [HashMap(JDK1.8)源码学习](docs/java/collection/HashMap.md)  
 
 ### 并发
 
+**面试题总结：**
+
 * **[Java 并发基础常见面试题总结](docs/java/Multithread/JavaConcurrencyBasicsCommonInterviewQuestionsSummary.md)**
 * **[Java 并发进阶常见面试题总结](docs/java/Multithread/JavaConcurrencyAdvancedCommonInterviewQuestions.md)**
+
+**必备知识点：**
+
 * [并发容器总结](docs/java/Multithread/并发容器总结.md)
 * **[Java线程池学习总结](./docs/java/Multithread/java线程池学习总结.md)**
 * [乐观锁与悲观锁](docs/essential-content-for-interview/面试必备之乐观锁与悲观锁.md)
@@ -109,6 +128,7 @@
 * [六 类加载器](docs/java/jvm/类加载器.md)
 * **[【待完成】八 最重要的 JVM 参数指南（翻译完善了一半）](docs/java/jvm/最重要的JVM参数指南.md)**
 * [九 JVM 配置常用参数和常用 GC 调优策略](docs/java/jvm/GC调优参数.md)
+* **[【加餐】大白话带你认识JVM](docs/java/jvm/[加餐]大白话带你认识JVM.md)**
 
 ### I/O
 
@@ -175,25 +195,27 @@
 
 ### 数据库扩展
 
-代办......
+待办......
 
 ## 系统设计
 
 ### 常用框架
 
-#### Spring/SpringBoot
+#### Spring
 
 - [Spring 学习与面试](docs/system-design/framework/spring/Spring.md)
 - **[Spring 常见问题总结](docs/system-design/framework/spring/SpringInterviewQuestions.md)**
-- **[SpringBoot 指南/常见面试题总结](https://github.com/Snailclimb/springboot-guide)**
-- [Spring中bean的作用域与生命周期](docs/system-design/framework/spring/SpringBean.md)
+- [Spring中 Bean 的作用域与生命周期](docs/system-design/framework/spring/SpringBean.md)
 - [SpringMVC 工作原理详解](docs/system-design/framework/spring/SpringMVC-Principle.md)
 - [Spring中都用到了那些设计模式?](docs/system-design/framework/spring/Spring-Design-Patterns.md)
 
-#### ZooKeeper
+#### SpringBoot
 
-- [ZooKeeper 相关概念总结](docs/system-design/framework/ZooKeeper.md)
-- [ZooKeeper 数据模型和常见命令](docs/system-design/framework/ZooKeeper数据模型和常见命令.md)
+- **[SpringBoot 指南/常见面试题总结](https://github.com/Snailclimb/springboot-guide)**
+
+#### MyBatis
+
+- [MyBatis常见面试题总结](docs/system-design/framework/mybatis/mybatis-interview.md)
 
 ### 数据通信/中间件
 
@@ -208,6 +230,7 @@
 
 - [消息队列总结](docs/system-design/data-communication/message-queue.md)
 - [RabbitMQ 入门](docs/system-design/data-communication/rabbitmq.md)
+- [RocketMQ 入门](docs/system-design/data-communication/RocketMQ.md)
 - [RocketMQ的几个简单问题与答案](docs/system-design/data-communication/RocketMQ-Questions.md)
 - [Kafka入门看这一篇就够了](docs/system-design/data-communication/Kafka入门看这一篇就够了.md)
 - [Kafka系统设计开篇-面试看这篇就够了](docs/system-design/data-communication/Kafka系统设计开篇-面试看这篇就够了.md)
@@ -222,6 +245,10 @@
 
 - [分布式应该学什么](docs/system-design/website-architecture/分布式.md)
 
+#### Spring Cloud
+
+- [ 大白话入门 Spring Cloud](docs/system-design/micro-service/spring-cloud.md)
+
 #### API 网关
 
 网关主要用于请求转发、安全认证、协议转换、容灾。
@@ -230,20 +257,38 @@
 
 #### 配置中心
 
-代办......
+待办......
 
 #### 唯一 id 生成
 
- [分布式id生成方案总结](docs/system-design/micro-service/分布式id生成方案总结.md)
+-  [分布式id生成方案总结](docs/system-design/micro-service/分布式id生成方案总结.md)
 
 #### 服务治理：服务注册与发现、服务路由控制
 
-代办......
+**ZooKeeper:**
 
-### 架构
+> 前两篇文章可能有内容重合部分，推荐都看一遍。
+
+- [【入门】ZooKeeper 相关概念总结](docs/system-design/framework/ZooKeeper.md)
+- [【进阶】Zookeeper 原理简单入门！](docs/system-design/framework/ZooKeeper-plus.md)
+- [【拓展】ZooKeeper 数据模型和常见命令](docs/system-design/framework/ZooKeeper数据模型和常见命令.md)
+
+### 大型网站架构
 
 - [8 张图读懂大型网站技术架构](docs/system-design/website-architecture/8%20张图读懂大型网站技术架构.md)
 - [【面试精选】关于大型网站系统架构你不得不懂的10个问题](docs/system-design/website-architecture/关于大型网站系统架构你不得不懂的10个问题.md)
+
+#### 性能测试
+
+- [后端程序员也要懂的性能测试知识](https://articles.zsxq.com/id_lwl39teglv3d.html) （知识星球）
+
+#### 高并发
+
+待办......
+
+#### 高可用
+
+- [如何设计一个高可用系统？要考虑哪些地方？](docs/system-design/website-architecture/如何设计一个高可用系统？要考虑哪些地方？.md)
 
 ### 设计模式
 
@@ -277,6 +322,8 @@
 - [Java学习路线和方法推荐](docs/questions/java-learning-path-and-methods.md)
 - [Java培训四个月能学会吗？](docs/questions/java-training-4-month.md)
 - [新手学习Java，有哪些Java相关的博客，专栏，和技术学习网站推荐？](docs/questions/java-learning-website-blog.md)
+- [Java 还是大数据，你需要了解这些东西！](docs/questions/java-big-data)
+- [Java 后台开发/大数据？你需要了解这些东西！](https://articles.zsxq.com/id_wto1iwd5g72o.html)（知识星球）
 
 ## 工具
 
@@ -306,6 +353,7 @@
 ### Github
 
 - [Github 上 Star 数最多的 10 个项目，看完之后很意外!](docs/tools/github/github-star-ranking.md)
+- [年末将至，值得你关注的16个Java 开源项目！](docs/github-trending/2019-12.md)
 - [Java 项目月榜单](docs/github-trending/JavaGithubTrending.md)
 
 ***
