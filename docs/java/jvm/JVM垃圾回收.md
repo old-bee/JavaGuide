@@ -86,6 +86,8 @@ Java 堆是垃圾收集器管理的主要区域，因此也被称作**GC 堆（G
 - **新生代 GC（Minor GC）**:指发生新生代的的垃圾收集动作，Minor GC 非常频繁，回收速度一般也比较快。
 - **老年代 GC（Major GC/Full GC）**:指发生在老年代的 GC，出现了 Major GC 经常会伴随至少一次的 Minor GC（并非绝对），Major GC 的速度一般会比 Minor GC 的慢 10 倍以上。
 
+> [issue#664 ](https://github.com/Snailclimb/JavaGuide/issues/664) :**[guang19](https://github.com/guang19)** 补充：个人在网上查阅相关资料的时候发现如题所说的观点。有的文章说 Full GC与Major GC一样是属于对老年代的GC，也有的文章说 Full GC 是对整个堆区的GC，所以这点需要各位同学自行分辨Full GC语义。见: [知乎讨论](https://www.zhihu.com/question/41922036)
+
 **测试：**
 
 ```java
@@ -157,21 +159,24 @@ public class GCTest {
 > ```c++
 > uint ageTable::compute_tenuring_threshold(size_t survivor_capacity) {
 > 	//survivor_capacity是survivor空间的大小
->   size_t desired_survivor_size = (size_t)((((double) survivor_capacity)*TargetSurvivorRatio)/100);
->   size_t total = 0;
->   uint age = 1;
->   while (age < table_size) {
->     total += sizes[age];//sizes数组是每个年龄段对象大小
->     if (total > desired_survivor_size) break;
->     age++;
->   }
->   uint result = age < MaxTenuringThreshold ? age : MaxTenuringThreshold;
+> size_t desired_survivor_size = (size_t)((((double) survivor_capacity)*TargetSurvivorRatio)/100);
+> size_t total = 0;
+> uint age = 1;
+> while (age < table_size) {
+>  total += sizes[age];//sizes数组是每个年龄段对象大小
+>  if (total > desired_survivor_size) break;
+>  age++;
+> }
+> uint result = age < MaxTenuringThreshold ? age : MaxTenuringThreshold;
 > 	...
 > }
 > 
 > ```
 >
-> 
+> 额外补充说明([issue672](https://github.com/Snailclimb/JavaGuide/issues/672))：**关于默认的晋升年龄是15，这个说法的来源大部分都是《深入理解Java虚拟机》这本书。**
+> 如果你去Oracle的官网阅读[相关的虚拟机参数](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html)，你会发现`-XX:MaxTenuringThreshold=threshold`这里有个说明
+>
+> **Sets the maximum tenuring threshold for use in adaptive GC sizing. The largest value is 15. The default value is 15 for the parallel (throughput) collector, and 6 for the CMS collector.默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.**
 
 
 ## 2 对象已经死亡？
@@ -408,7 +413,7 @@ G1 收集器的运作大致分为以下几个步骤：
 - **筛选回收**
 
 
-**G1 收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的 Region(这也就是它的名字 Garbage-First 的由来)**。这种使用 Region 划分内存空间以及有优先级的区域回收方式，保证了 GF 收集器在有限时间内可以尽可能高的收集效率（把内存化整为零）。
+**G1 收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的 Region(这也就是它的名字 Garbage-First 的由来)**。这种使用 Region 划分内存空间以及有优先级的区域回收方式，保证了 G1 收集器在有限时间内可以尽可能高的收集效率（把内存化整为零）。
 
 ## 参考
 
