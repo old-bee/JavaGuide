@@ -105,13 +105,6 @@ Java 堆是垃圾收集器管理的主要区域，因此也被称作**GC 堆（G
 
 大多数情况下，对象在新生代中 eden 区分配。当 eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC.下面我们来进行实际测试以下。
 
-在测试之前我们先来看看 **Minor GC 和 Full GC 有什么不同呢？**
-
-- **新生代 GC（Minor GC）**:指发生新生代的的垃圾收集动作，Minor GC 非常频繁，回收速度一般也比较快。
-- **老年代 GC（Major GC/Full GC）**:指发生在老年代的 GC，出现了 Major GC 经常会伴随至少一次的 Minor GC（并非绝对），Major GC 的速度一般会比 Minor GC 的慢 10 倍以上。
-
-> [issue#664 ](https://github.com/Snailclimb/JavaGuide/issues/664) :**[guang19](https://github.com/guang19)** 补充：个人在网上查阅相关资料的时候发现如题所说的观点。有的文章说 Major GC 与 Full GC 一样是属于对老年代的GC，也有的文章说 Major GC 是对整个堆区的GC，所以这点需要各位同学自行分辨 Major GC 语义。见: [知乎讨论](https://www.zhihu.com/question/41922036)
-
 **测试：**
 
 ```java
@@ -202,6 +195,27 @@ public class GCTest {
 >
 > **Sets the maximum tenuring threshold for use in adaptive GC sizing. The largest value is 15. The default value is 15 for the parallel (throughput) collector, and 6 for the CMS collector.默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.**
 
+### 1.5主要进行 gc 的区域 
+
+周志明先生在《深入理解Java虚拟机》第二版中P92如是写道：
+
+> ~~*“老年代GC（Major GC/Full GC），指发生在老年代的GC……”*~~
+
+上面的说法已经在《深入理解Java虚拟机》第三版中被改正过来了。感谢R大的回答：
+
+![](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2020-8/b48228c2-ac00-4668-a78f-6f221f8563b5.png)
+
+**总结：**
+
+针对HotSpot VM的实现，它里面的GC其实准确分类只有两大种：
+
+部分收集 (Partial GC)：
+
+- 新生代收集（Minor GC / Young GC）：只对新生代进行垃圾收集；
+- 老年代收集（Major GC / Old GC）：只对老年代进行垃圾收集。需要注意的是 Major GC 在有的语境中也用于指代整堆收集；
+- 混合收集（Mixed GC）：对整个新生代和部分老年代进行垃圾收集。
+
+整堆收集 (Full GC)：收集整个 Java 堆和方法区。
 
 ## 2 对象已经死亡？
 
@@ -238,6 +252,11 @@ public class ReferenceCountingGc {
 
 ![可达性分析算法 ](./pictures/jvm垃圾回收/72762049.png)
 
+可作为GC Roots的对象包括下面几种:
+* 虚拟机栈(栈帧中的本地变量表)中引用的对象
+* 本地方法栈(Native方法)中引用的对象
+* 方法区中类静态属性引用的对象
+* 方法区中常量引用的对象
 
 ### 2.3 再谈引用
 
@@ -279,13 +298,11 @@ JDK1.2 以后，Java 对引用的概念进行了扩充，将引用分为强引�
 
 被判定为需要执行的对象将会被放在一个队列中进行第二次标记，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。
 
-### 2.5 如何判断一个常量是废弃常量
+### 2.5 如何判断一个常量是废弃常量？
 
 运行时常量池主要回收的是废弃的常量。那么，我们如何判断一个常量是废弃常量呢？
 
 假如在常量池中存在字符串 "abc"，如果当前没有任何 String 对象引用该字符串常量的话，就说明常量 "abc" 就是废弃常量，如果这时发生内存回收的话而且有必要的话，"abc" 就会被系统清理出常量池。
-
-注意：我们在 [可能是把 Java 内存区域讲的最清楚的一篇文章 ](https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484303&idx=1&sn=af0fd436cef755463f59ee4dd0720cbd&chksm=fd9855eecaefdcf8d94ac581cfda4e16c8a730bda60c3b50bc55c124b92f23b6217f7f8e58d5&token=506869459&lang=zh_CN#rd) 也讲了 JDK1.7 及之后版本的 JVM 已经将运行时常量池从方法区中移了出来，在 Java 堆（Heap）中开辟了一块区域存放运行时常量池。
 
 ### 2.6 如何判断一个类是无用的类
 
@@ -306,7 +323,7 @@ JDK1.2 以后，Java 对引用的概念进行了扩充，将引用分为强引�
 
 ### 3.1 标记-清除算法
 
-该算法分为“标记”和“清除”阶段：首先比较出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。它是最基础的收集算法，后续的算法都是对其不足进行改进得到。这种垃圾收集算法会带来两个明显的问题：
+该算法分为“标记”和“清除”阶段：首先标记出所有不需要回收的对象，在标记完成后统一回收掉所有没有被标记的对象。它是最基础的收集算法，后续的算法都是对其不足进行改进得到。这种垃圾收集算法会带来两个明显的问题：
 
 1. **效率问题**
 2. **空间问题（标记清除后会产生大量不连续的碎片）**
@@ -320,6 +337,7 @@ JDK1.2 以后，Java 对引用的概念进行了扩充，将引用分为强引�
 <img src="./pictures/jvm垃圾回收/90984624.png" alt="公众号" width="500px">
 
 ### 3.3 标记-整理算法
+
 根据老年代的特点提出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。
 
 ![标记-整理算法 ](./pictures/jvm垃圾回收/94057049.png)
@@ -383,11 +401,21 @@ Parallel Scavenge 收集器也是使用复制算法的多线程收集器，它�
 
 ```
 
-**Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。所谓吞吐量就是 CPU 中用于运行用户代码的时间与 CPU 总消耗时间的比值。** Parallel Scavenge 收集器提供了很多参数供用户找到最合适的停顿时间或最大吞吐量，如果对于收集器运作不太了解的话，手工优化存在困难的话可以选择把内存管理优化交给虚拟机去完成也是一个不错的选择。
+**Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。所谓吞吐量就是 CPU 中用于运行用户代码的时间与 CPU 总消耗时间的比值。** Parallel Scavenge 收集器提供了很多参数供用户找到最合适的停顿时间或最大吞吐量，如果对于收集器运作不太了解，手工优化存在困难的时候，使用Parallel Scavenge收集器配合自适应调节策略，把内存管理优化交给虚拟机去完成也是一个不错的选择。
 
  **新生代采用复制算法，老年代采用标记-整理算法。**
 ![Parallel Scavenge 收集器 ](./pictures/jvm垃圾回收/parllel-scavenge收集器.png)
 
+**是JDK1.8默认收集器**  
+ 使用java -XX:+PrintCommandLineFlags -version命令查看
+
+```
+-XX:InitialHeapSize=262921408 -XX:MaxHeapSize=4206742528 -XX:+PrintCommandLineFlags -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseParallelGC 
+java version "1.8.0_211"
+Java(TM) SE Runtime Environment (build 1.8.0_211-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)
+```
+JDK1.8默认使用的是Parallel Scavenge + Parallel Old，如果指定了-XX:+UseParallelGC参数，则默认指定了-XX:+UseParallelOldGC，可以使用-XX:-UseParallelOldGC来禁用该功能
 
 ### 4.4.Serial Old 收集器
 **Serial 收集器的老年代版本**，它同样是一个单线程收集器。它主要有两大用途：一种用途是在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用，另一种用途是作为 CMS 收集器的后备方案。
